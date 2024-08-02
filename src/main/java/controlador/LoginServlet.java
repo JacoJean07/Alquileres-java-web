@@ -39,8 +39,8 @@ public class LoginServlet extends HttpServlet {
         }
 
         if (login.VerificarContrasena(password, usuario)) {
-            String id_usuario = login.getId();
-            session.setAttribute("id_usuario", id_usuario);
+            String id = login.getId();
+            session.setAttribute("id_usuario", id);
 
             response.sendRedirect(MAIN_PAGE);
         } else {

@@ -10,15 +10,55 @@
     </context-param>
     <context-param>
         <param-name>jdbcPASS</param-name>
-        <param-value/>
+        <param-value>admin</param-value>
     </context-param>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>controlador.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VistasServlet</servlet-name>
+        <servlet-class>controlador.VistasServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InquilinosServlet</servlet-name>
+        <servlet-class>controlador.InquilinosServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PropiedadesServlet</servlet-name>
+        <servlet-class>controlador.PropiedadesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PagosServlet</servlet-name>
+        <servlet-class>controlador.PagosServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ContratosServlet</servlet-name>
+        <servlet-class>controlador.ContratosServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VistasServlet</servlet-name>
+        <url-pattern>/VistasServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InquilinosServlet</servlet-name>
+        <url-pattern>/InquilinosServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PropiedadesServlet</servlet-name>
+        <url-pattern>/PropiedadesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PagosServlet</servlet-name>
+        <url-pattern>/PagosServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContratosServlet</servlet-name>
+        <url-pattern>/ContratosServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
