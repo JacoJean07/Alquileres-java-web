@@ -33,14 +33,14 @@ public class Vistas {
         lista3.clear();
         inquilinos.clear();
         dato.clear();
-
+        // Obtener los inquilinos
         try {
             conn.connect(); // Conecta a la base de datos
             Connection connection = conn.getJdbcConnection();
-
+            // Llamar al procedimiento almacenado
             CallableStatement stmt = connection.prepareCall("{CALL obtenerInquilinos}");
             ResultSet rs = stmt.executeQuery();
-
+            // Iterar sobre los resultados para mostrarlos en la lista
             while (rs.next()) {
                 Map<String, Object> inquilino = new HashMap<>();
                 inquilino.put("id", rs.getInt("id"));
@@ -52,6 +52,7 @@ public class Vistas {
                 inquilinos.add(inquilino);
             }
         } catch (SQLException e) {
+            // Si hay algún error, imprimirlo
             e.printStackTrace();
         } finally {
             try {
@@ -60,9 +61,10 @@ public class Vistas {
                 e.printStackTrace();
             }
         }
+        // Añadir los inquilinos a la lista
         lista.addAll(inquilinos);
     }
-
+    // Método para mostrar los inquilinos por ID PARA MOSTRAR UN SOLO INQUILINO
     public static void mostrarInquilino(int id) {
         lista.clear();
         lista2.clear();

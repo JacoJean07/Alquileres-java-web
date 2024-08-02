@@ -42,7 +42,7 @@ public class Login {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    // Método para verificar la contraseña del usuario
     public boolean VerificarContrasena(String password, String usuario) {
         String sql = "SELECT id, password FROM propietario WHERE usuario = ?";
         try {
@@ -50,21 +50,25 @@ public class Login {
             Connection connection = conn.getJdbcConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, usuario);
+            // Ejecutar la consulta y obtener los resultados
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     String storedPassword = resultSet.getString("password");
                     if (storedPassword.equals(password)) {
                         this.id = resultSet.getString("id"); // Asigna el id del usuario
+                        // Si se pudo verificar la contraseña, devolver true
                         return true;
                     }
                 }
             }
+            // Cerrar la conexión
             statement.close();
             conn.disconnect();
         } catch (SQLException e) {
+            // Si hay algún error, lanzar una excepción
             throw new RuntimeException("Error al verificar el usuario", e);
         }
-
+        // Si no se pudo verificar la contraseña, devolver false
         return false;
     }
 }
