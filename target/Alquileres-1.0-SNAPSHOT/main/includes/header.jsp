@@ -62,7 +62,7 @@
                                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                                                 role="button" aria-haspopup="true" aria-expanded="false">User</a>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                                                <a class="dropdown-item" href="../index.jsp">Cerrar Sesión</a>
                                             </div>
                                         </li>
                                     </ul>

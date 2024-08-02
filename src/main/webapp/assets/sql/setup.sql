@@ -265,3 +265,24 @@ VALUES
     ('Pablo', 'Perez', '123456789', '123456789', 'pablo@gmail.com'),
     ('Carlos', 'Perez', '123456789', '123456789', 'carlos@gmail.com'),
     ('Maria', 'Perez', '123456789', '123456789', 'maria@gmail.com');
+
+
+INSERT INTO contrato (valorMensual, diaMaximoDePago, estado, inquilino_id, propiedad_id) 
+VALUES 
+    (1000, 5, true, 19, 3),
+    (2000, 5, true, 19, 5),
+    (3000, 5, true, 19, 3),
+    (4000, 5, true, 19, 3),
+    (5000, 5, true, 19, 5),
+    (6000, 5, true, 19, 5),
+    (7000, 5, true, 19, 5);
+
+INSERT INTO pago (monto, formaPago, detallePago, estado, inquilino_id) 
+VALUES 
+    (1000, 'EFECTIVO', 'Pago 1', true, 19),
+    (2000, 'EFECTIVO', 'Pago 2', true, 19),
+    (3000, 'EFECTIVO', 'Pago 3', true, 19),
+    (4000, 'EFECTIVO', 'Pago 4', true, 19),
+    (5000, 'EFECTIVO', 'Pago 5', true, 19),
+    (6000, 'EFECTIVO', 'Pago 6', true, 19),
+    (7000, 'EFECTIVO', 'Pago 7', true, 19);

@@ -92,7 +92,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${sessionScope.pagos}" var="pago">
+                            <c:forEach items="${sessionScope.lista}" var="pago">
                                 <tr>
                                     <td>${pago.id}</td>
                                     <td>${pago.fechaRegistro}</td>
