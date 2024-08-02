@@ -29,6 +29,8 @@ public class Vistas {
 
     public static void mostrarInquilinos() {
         lista.clear();
+        lista2.clear();
+        lista3.clear();
         inquilinos.clear();
         dato.clear();
 
@@ -62,6 +64,9 @@ public class Vistas {
     }
 
     public static void mostrarInquilino(int id) {
+        lista.clear();
+        lista2.clear();
+        lista3.clear();
         dato.clear();
         inquilinos.clear();
 
@@ -97,6 +102,8 @@ public class Vistas {
 
     public static void mostrarPropiedades() {
         lista.clear();
+        lista2.clear();
+        lista3.clear();
         propiedades.clear();
         dato.clear();
 
@@ -131,6 +138,9 @@ public class Vistas {
     }
 
     public static void mostrarPropiedad(int id) {
+        lista.clear();
+        lista2.clear();
+        lista3.clear();
         dato.clear();
         propiedades.clear();
 
@@ -148,7 +158,7 @@ public class Vistas {
                 propiedad.put("direccion", rs.getString("direccion"));
                 propiedad.put("numero", rs.getString("numero"));
                 propiedad.put("descripcion", rs.getString("descripcion"));
-                propiedad.put("estado", rs.getBoolean("estado"));
+                propiedad.put("estado", rs.getString("estado"));
                 propiedad.put("fechaRegistro", rs.getTimestamp("fechaRegistro"));
                 propiedad.put("propietario_id", rs.getInt("propietario_id"));
                 dato = propiedad; // Añadir directamente al resultado esperado
@@ -167,6 +177,8 @@ public class Vistas {
 
     public static void mostrarContratos() {
         lista.clear();
+        lista2.clear();
+        lista3.clear();
         contratos.clear();
         dato.clear();
 
@@ -176,7 +188,6 @@ public class Vistas {
 
             CallableStatement stmt = connection.prepareCall("{CALL obtenerContratos}");
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
                 Map<String, Object> contrato = new HashMap<>();
                 contrato.put("id", rs.getInt("id"));
@@ -184,7 +195,7 @@ public class Vistas {
                 contrato.put("diaMaximoDePago", rs.getInt("diaMaximoDePago"));
                 contrato.put("fechaInicioContrato", rs.getTimestamp("fechaInicioContrato"));
                 contrato.put("fechaFinContrato", rs.getTimestamp("fechaFinContrato"));
-                contrato.put("estado", rs.getBoolean("estado"));
+                contrato.put("estado", rs.getString("estado"));
                 contrato.put("inquilino_id", rs.getInt("inquilino_id"));
                 contrato.put("propiedad_id", rs.getInt("propiedad_id"));
                 contratos.add(contrato);
@@ -213,7 +224,7 @@ public class Vistas {
                 propiedad.put("direccion", rs3.getString("direccion"));
                 propiedad.put("numero", rs3.getString("numero"));
                 propiedad.put("descripcion", rs3.getString("descripcion"));
-                propiedad.put("estado", rs3.getBoolean("estado"));
+                propiedad.put("estado", rs3.getString("estado"));
                 propiedad.put("fechaRegistro", rs3.getTimestamp("fechaRegistro"));
                 propiedad.put("propietario_id", rs3.getInt("propietario_id"));
                 propiedades.add(propiedad);
@@ -234,6 +245,9 @@ public class Vistas {
     }
 
     public static void mostrarContrato(int id) {
+        lista.clear();
+        lista2.clear();
+        lista3.clear();
         dato.clear();
         contratos.clear();
 
@@ -270,6 +284,8 @@ public class Vistas {
 
     public static void mostrarPagos() {
         lista.clear();
+        lista2.clear();
+        lista3.clear();
         pagos.clear();
         dato.clear();
 
@@ -338,4 +354,10 @@ public class Vistas {
             return dato;
         }
     }
+
+    public static void limpiarListas() {
+        lista.clear();
+        lista2.clear();
+        lista3.clear();
+    }   
 }

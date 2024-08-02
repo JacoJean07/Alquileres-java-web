@@ -14,7 +14,7 @@ public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private final String LOGIN_PAGE = "index.jsp";
-    private final String MAIN_PAGE = "main/index.jsp";
+    private final String MAIN_PAGE = "VistasServlet?vista=index";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

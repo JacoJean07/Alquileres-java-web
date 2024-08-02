@@ -6,7 +6,7 @@
 
             <jsp:include page="includes/header.jsp" />
 
-            <div class="row">
+            <div class="row  content-container">
                 <div class="col-sm-12">
                     <h1 class="text-center">Inquilinos</h1>
                     <div class="card-deck">
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <!-- table section -->
-            <div class="row">
+            <div class="row  content-container">
                 <div class="col-sm-12">
                     <h1 class="text-center">Registros de Inquilinos</h1>
                     <div class="card-deck">

@@ -101,14 +101,12 @@ public class Propiedades {
             Connection connection = conn.getJdbcConnection();
 
             CallableStatement statement;
-            statement = connection.prepareCall("{CALL editarPropiedadPorId(?, ?, ?, ?, ?, ?, ?)}");
+            statement = connection.prepareCall("{CALL editarPropiedadPorId(?, ?, ?, ?, ?)}");
             statement.setInt(1, id);
             statement.setString(2, direccion);
             statement.setString(3, numero);
             statement.setString(4, descripcion);
             statement.setString(5, estado);
-            statement.setDate(6, new java.sql.Date(fechaRegistro.getTime())); // Convertir java.util.Date a java.sql.Date
-            statement.setInt(7, propietarioId);
             statement.execute();
             statement.close();
         } catch (SQLException e) {
@@ -134,7 +132,7 @@ public class Propiedades {
             Connection connection = conn.getJdbcConnection();
 
             CallableStatement statement;
-            statement = connection.prepareCall("{CALL ingresarPropiedad(?, ?, ?, ?, ?, ?)}");
+            statement = connection.prepareCall("{CALL ingresarPropiedad(?, ?, ?, ?, ?)}");
             statement.setString(1, direccion);
             statement.setString(2, numero);
             statement.setString(3, descripcion);

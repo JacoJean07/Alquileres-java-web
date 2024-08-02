@@ -5,7 +5,7 @@
 
 <jsp:include page="includes/header.jsp" />
 
-<div class="row">
+<div class="row  content-container">
     <div class="col-sm-12">
         <h1 class="text-center">Contratos</h1>
         <div class="card-deck">
@@ -49,7 +49,7 @@
                             <label for="inquilino_id">Inquilino</label>
                             <select class="form-control" id="inquilino_id" name="inquilino_id">
                                 <!-- Aquí deberías llenar los inquilinos desde el backend -->
-                                <c:forEach items="${inquilinos}" var="inquilino">
+                                <c:forEach items="${sessionScope.lista3}" var="inquilino">
                                     <option value="${inquilino.id}" ${dato != null && dato.inquilino_id == inquilino.id ? 'selected' : ''}>
                                         ${inquilino.nombres} ${inquilino.apellidos}
                                     </option>
@@ -60,7 +60,7 @@
                             <label for="propiedad_id">Propiedad</label>
                             <select class="form-control" id="propiedad_id" name="propiedad_id">
                                 <!-- Aquí deberías llenar las propiedades desde el backend -->
-                                <c:forEach items="${propiedades}" var="propiedad">
+                                <c:forEach items="${sessionScope.lista2}" var="propiedad">
                                     <option value="${propiedad.id}" ${dato != null && dato.propiedad_id == propiedad.id ? 'selected' : ''}>
                                         ${propiedad.direccion} (${propiedad.numero})
                                     </option>
@@ -79,7 +79,7 @@
     </div>
 </div>
 <!-- table section -->
-<div class="row">
+<div class="row content-container">
     <div class="col-sm-12">
         <h1 class="text-center">Registros de Contratos</h1>
         <div class="card-deck">
@@ -103,7 +103,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${sessionScope.contratos}" var="contrato">
+                            <c:forEach items="${sessionScope.lista}" var="contrato">
                                 <tr>
                                     <td>${contrato.id}</td>
                                     <td>${contrato.valorMensual}</td>

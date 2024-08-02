@@ -74,10 +74,10 @@ public class PropiedadServlet extends HttpServlet {
                 propiedad.setNumero(numero);
                 propiedad.setDescripcion(descripcion);
                 propiedad.setEstado(estado);
-                propiedad.setPropietarioId(Integer.parseInt(propietarioId));
                 propiedad.EditarPropiedad();
             }
         } catch (Exception e) {
+            System.out.println(e);
             throw new RuntimeException("Error al manejar la propiedad", e);
         }
 

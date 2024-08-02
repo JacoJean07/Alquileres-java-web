@@ -5,14 +5,14 @@
 
 <jsp:include page="includes/header.jsp" />
 
-<div class="row">
+<div class="row  content-container">
     <div class="col-sm-12">
         <h1 class="text-center">Propiedades</h1>
         <div class="card-deck">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Ingresar</h5>
-                    <form action="../PropiedadesServlet" class="col-sm-12 form-group" method="post">
+                    <form action="../PropiedadServlet" class="col-sm-12 form-group" method="post">
                         <div class="row">
                             <div class="form-group col-sm-6">
                                 <label for="direccion">Dirección</label>
@@ -42,6 +42,7 @@
                                 </select>
                             </div>
                         </div>
+                        <input type="hidden" name="propietarioId" value="1">
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" name="accionInput"
                                 value="${dato != null ? 'Editar' : 'Ingresar'}">
@@ -54,13 +55,13 @@
     </div>
 </div>
 <!-- table section -->
-<div class="row">
+<div class="row  content-container">
     <div class="col-sm-12">
         <h1 class="text-center">Registros de Propiedades</h1>
         <div class="card-deck">
             <div class="card">
                 <div class="card-header">
-                    <form action="../PropiedadesServlet" method="post">
+                    <form action="../PropiedadServlet" method="post">
                         <input type="submit" class="btn btn-primary" name="accionInput" value="mostrar">
                     </form>
                 </div>
@@ -90,7 +91,7 @@
                                         <a href="../VistasServlet?vista=Propiedades&id=${propiedad.id}">
                                             <button type="button" class="btn btn-primary">Editar</button>
                                         </a>
-                                        <form action="../PropiedadesServlet" method="post">
+                                        <form action="../PropiedadServlet" method="post">
                                             <input type="hidden" name="id" id="id" value="${propiedad.id}">
                                             <input type="hidden" name="accionInput" id="accionInput" value="eliminar">
                                             <button class="btn btn-danger" type="submit"

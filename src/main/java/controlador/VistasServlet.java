@@ -67,22 +67,28 @@ public class VistasServlet extends HttpServlet {
                 if (id != null) {
                     Vistas.mostrarInquilino(Integer.parseInt(id));
                 }
+                Vistas.limpiarListas();
                 return INQUILINOS;
             case "Propiedades":
                 Vistas.mostrarPropiedades();
                 if (id != null) {
                     Vistas.mostrarPropiedad(Integer.parseInt(id));
                 }
+                Vistas.limpiarListas();
                 return PROPIEDADES;
             case "Contratos":
                 Vistas.mostrarContratos();
                 if (id != null) {
                     Vistas.mostrarContrato(Integer.parseInt(id));
                 }
+                Vistas.limpiarListas();
                 return CONTRATOS;
             case "Pagos":
                 Vistas.mostrarPagos();
+                Vistas.limpiarListas();
                 return PAGOS;
+            case "index":
+                return INDEX;
             default:
                 return INDEX;
         }

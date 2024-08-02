@@ -1,9 +1,8 @@
 package controlador;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +11,8 @@ import modelo.Pagos;
 import coneccion.Conn;
 
 /**
- *
+ * Servlet para gestionar pagos.
+ * 
  * @author Pablo Perez
  */
 public class PagosServlet extends HttpServlet {
@@ -33,32 +33,15 @@ public class PagosServlet extends HttpServlet {
       throws ServletException, IOException {
     processRequest(request, response);
 
+    // Obtener parámetros del formulario
+    String fechaRegistroStr = request.getParameter("fechaRegistro");
     String montoStr = request.getParameter("monto");
     String formaPago = request.getParameter("formaPago");
     String detallePago = request.getParameter("detallePago");
     String estadoStr = request.getParameter("estado");
+    String inquilinoIdStr = request.getParameter("inquilino_id");
     String accionInput = request.getParameter("accionInput");
-    Integer id = null;
-    Integer inquilinoId = null;
-
-    // Convertir el monto de String a BigDecimal
-    java.math.BigDecimal monto = new java.math.BigDecimal(montoStr);
-
-    // Convertir el estado de String a Boolean
-    Boolean estado = Boolean.parseBoolean(estadoStr);
-
-    List<Map<String, Object>> listaPagos = null;
-
-    // Maneja el caso en que id puede no estar presente
-    if (request.getParameter("id") != null && !request.getParameter("id").isEmpty()) {
-      id = Integer.parseInt(request.getParameter("id"));
-    }
-
-    if (request.getParameter("inquilino_id") != null && !request.getParameter("inquilino_id").isEmpty()) {
-      inquilinoId = Integer.parseInt(request.getParameter("inquilino_id"));
-    }
-
-    System.out.println(accionInput);
+    String id = request.getParameter("id");
 
     // Configura la conexión a la base de datos
     String jdbcURL = getServletContext().getInitParameter("jdbcURL");
@@ -66,61 +49,58 @@ public class PagosServlet extends HttpServlet {
     String jdbcPASS = getServletContext().getInitParameter("jdbcPASS");
 
     Conn conn = new Conn(jdbcURL, jdbcUSER, jdbcPASS);
-    Pagos pagos = new Pagos(conn);
+    Pagos pago = new Pagos(conn);
 
-    switch (accionInput) {
-      case "Ingresar":
-        pagos.ingresarPago(monto, formaPago, detallePago, estado, inquilinoId);
-        // ACTUALIZA LA LISTA DE PAGOS
-        pagos.mostrarPagos();
-        listaPagos = pagos.getPagos();
-        request.getSession().setAttribute("pagos", listaPagos);
-        if (listaPagos.isEmpty()) {
-          System.out.println("No hay pagos disponibles para mostrar.");
+    try {
+      if ("eliminar".equals(accionInput)) {
+        // Eliminar pago
+        if (id != null && !id.isEmpty()) {
+          pago.setId(Integer.parseInt(id));
+          pago.eliminarPago();
+        } else {
+          throw new RuntimeException("ID del pago no especificado.");
         }
-        break;
-      case "editar":
-        if (id != null) {
-          pagos.editarPago(id, monto, formaPago, detallePago, estado, inquilinoId);
-          // ACTUALIZA LA LISTA DE PAGOS
-          pagos.mostrarPagos();
-          listaPagos = pagos.getPagos();
-          request.getSession().setAttribute("pagos", listaPagos);
-          if (listaPagos.isEmpty()) {
-            System.out.println("No hay pagos disponibles para mostrar.");
-          }
+      } else if ("Ingresar".equals(accionInput)) {
+        // Crear un nuevo pago
+        BigDecimal monto = new BigDecimal(montoStr);
+        boolean estado = Boolean.parseBoolean(estadoStr);
+        int inquilinoId = Integer.parseInt(inquilinoIdStr);
+
+        pago.setMonto(monto);
+        pago.setFormaPago(formaPago);
+        pago.setDetallePago(detallePago);
+        pago.setEstado(estado);
+        pago.setInquilinoId(inquilinoId);
+
+        pago.insertarPago();
+      } else {
+        // Actualizar pago existente
+        if (id == null || id.isEmpty()) {
+          throw new RuntimeException("ID del pago no especificado.");
         }
-        break;
-      case "eliminar":
-        if (id != null) {
-          pagos.eliminarPago(id);
-          // ACTUALIZA LA LISTA DE PAGOS
-          pagos.mostrarPagos();
-          listaPagos = pagos.getPagos();
-          request.getSession().setAttribute("pagos", listaPagos);
-          if (listaPagos.isEmpty()) {
-            System.out.println("No hay pagos disponibles para mostrar.");
-          }
-        }
-        break;
-      case "mostrar":
-        pagos.mostrarPagos();
-        listaPagos = pagos.getPagos();
-        request.getSession().setAttribute("pagos", listaPagos);
-        if (listaPagos.isEmpty()) {
-          System.out.println("No hay pagos disponibles para mostrar.");
-        }
-        break;
-      default:
-        pagos.mostrarPagos();
-        break;
+        pago.setId(Integer.parseInt(id));
+        Timestamp fechaRegistro = Timestamp.valueOf(fechaRegistroStr);
+        BigDecimal monto = new BigDecimal(montoStr);
+        boolean estado = Boolean.parseBoolean(estadoStr);
+
+        pago.setFechaRegistro(fechaRegistro);
+        pago.setMonto(monto);
+        pago.setFormaPago(formaPago);
+        pago.setDetallePago(detallePago);
+        pago.setEstado(estado);
+
+        pago.editarPago();
+      }
+    } catch (Exception e) {
+      System.out.println(e);
+      throw new RuntimeException("Error al manejar el pago", e);
     }
-    // Redirige a la página de pagos
-    response.sendRedirect("main/pagos.jsp");
+
+    response.sendRedirect("./VistasServlet?vista=Pagos");
   }
 
   @Override
   public String getServletInfo() {
-    return "Short description";
+    return "Servlet para gestionar pagos";
   }
 }

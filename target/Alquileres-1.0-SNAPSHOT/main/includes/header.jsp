@@ -14,6 +14,7 @@
 
             <!-- bootstrap 5.3 -->
             <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+            <link rel="stylesheet" href="../assets/index.css">
         </head>
 
         <body>
@@ -23,7 +24,7 @@
                     <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
                         <div class="container-fluid">
                             <form action="../VistasServlet" method="POST">
-                                <a class="navbar-brand" href="#">Dashboard</a>
+                                <a class="navbar-brand" href="index.jsp">Dashboard</a>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
                                     aria-label="Toggle navigation">

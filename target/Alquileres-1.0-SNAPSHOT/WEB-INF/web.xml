@@ -25,8 +25,8 @@
         <servlet-class>controlador.InquilinosServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PropiedadesServlet</servlet-name>
-        <servlet-class>controlador.PropiedadesServlet</servlet-class>
+        <servlet-name>PropiedadServlet</servlet-name>
+        <servlet-class>controlador.PropiedadServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PagosServlet</servlet-name>
@@ -49,8 +49,8 @@
         <url-pattern>/InquilinosServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PropiedadesServlet</servlet-name>
-        <url-pattern>/PropiedadesServlet</url-pattern>
+        <servlet-name>PropiedadServlet</servlet-name>
+        <url-pattern>/PropiedadServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PagosServlet</servlet-name>

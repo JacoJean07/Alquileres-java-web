@@ -13,7 +13,7 @@ import java.util.HashMap;
  * @author jeanc
  */
 public class Contratos {
-    private String id;
+    private int id;
     private java.math.BigDecimal valorMensual;
     private Integer diaMaximoDePago;
     private java.sql.Timestamp fechaInicioContrato;
@@ -30,7 +30,7 @@ public class Contratos {
     public Contratos() {
     }
 
-    public Contratos(String id, java.math.BigDecimal valorMensual, Integer diaMaximoDePago, java.sql.Timestamp fechaInicioContrato, java.sql.Timestamp fechaFinContrato, Boolean estado, Integer inquilinoId, Integer propiedadId) {
+    public Contratos(int id, java.math.BigDecimal valorMensual, Integer diaMaximoDePago, java.sql.Timestamp fechaInicioContrato, java.sql.Timestamp fechaFinContrato, Boolean estado, Integer inquilinoId, Integer propiedadId) {
         this.id = id;
         this.valorMensual = valorMensual;
         this.diaMaximoDePago = diaMaximoDePago;
@@ -41,11 +41,11 @@ public class Contratos {
         this.propiedadId = propiedadId;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(  int id) {
         this.id = id;
     }
 
@@ -153,17 +153,15 @@ public class Contratos {
         }
     }
 
-    public void editarContrato(String id, java.math.BigDecimal valorMensual, Integer diaMaximoDePago, Boolean estado, Integer inquilinoId, Integer propiedadId) {
+    public void editarContrato(String id, java.math.BigDecimal valorMensual, Integer diaMaximoDePago, Boolean estado) {
         try {
             conn.connect();
             CallableStatement statement = conn.getJdbcConnection()
-                    .prepareCall("{call editarContratoPorId(?, ?, ?, ?, ?, ?)}");
+                    .prepareCall("{call editarContratoPorId(?, ?, ?, ?)}");
             statement.setString(1, id);
             statement.setBigDecimal(2, valorMensual);
             statement.setInt(3, diaMaximoDePago);
             statement.setBoolean(4, estado);
-            statement.setInt(5, inquilinoId);
-            statement.setInt(6, propiedadId);
             statement.execute();
             conn.disconnect();
         } catch (SQLException e) {

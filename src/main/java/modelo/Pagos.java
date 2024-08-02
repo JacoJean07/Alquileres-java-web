@@ -1,21 +1,21 @@
 package modelo;
 
 import coneccion.Conn;
-import java.sql.ResultSet;
+import java.sql.Connection;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
+import java.sql.Timestamp;
+import java.math.BigDecimal;
 
 /**
- *
- * @author Pablo Perez
+ * Modelo para gestionar pagos.
+ * 
+ * @autor Pablo Perez
  */
 public class Pagos {
     private Integer id;
-    private java.sql.Timestamp fechaRegistro;
-    private java.math.BigDecimal monto;
+    private Timestamp fechaRegistro;
+    private BigDecimal monto;
     private String formaPago;
     private String detallePago;
     private Boolean estado;
@@ -29,7 +29,7 @@ public class Pagos {
     public Pagos() {
     }
 
-    public Pagos(Integer id, java.sql.Timestamp fechaRegistro, java.math.BigDecimal monto, String formaPago, String detallePago, Boolean estado, Integer inquilinoId) {
+    public Pagos(Integer id, Timestamp fechaRegistro, BigDecimal monto, String formaPago, String detallePago, Boolean estado, Integer inquilinoId) {
         this.id = id;
         this.fechaRegistro = fechaRegistro;
         this.monto = monto;
@@ -39,6 +39,7 @@ public class Pagos {
         this.inquilinoId = inquilinoId;
     }
 
+    // Getters y Setters
     public Integer getId() {
         return id;
     }
@@ -47,19 +48,19 @@ public class Pagos {
         this.id = id;
     }
 
-    public java.sql.Timestamp getFechaRegistro() {
+    public Timestamp getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(java.sql.Timestamp fechaRegistro) {
+    public void setFechaRegistro(Timestamp fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public java.math.BigDecimal getMonto() {
+    public BigDecimal getMonto() {
         return monto;
     }
 
-    public void setMonto(java.math.BigDecimal monto) {
+    public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
 
@@ -95,80 +96,94 @@ public class Pagos {
         this.inquilinoId = inquilinoId;
     }
 
-    private static ArrayList<Map<String, Object>> pagos = new ArrayList<>();
-
-    public void mostrarPagos() {
-        pagos.clear();
-        try {
-            conn.connect();
-            CallableStatement statement = conn.getJdbcConnection().prepareCall("{call obtenerPagos()}");
-            statement.execute();
-            ResultSet resultSet = statement.getResultSet();
-
-            while (resultSet.next()) {
-                Map<String, Object> pago = new HashMap<>();
-                pago.put("id", resultSet.getInt("id"));
-                pago.put("fechaRegistro", resultSet.getTimestamp("fechaRegistro"));
-                pago.put("monto", resultSet.getBigDecimal("monto"));
-                pago.put("formaPago", resultSet.getString("formaPago"));
-                pago.put("detallePago", resultSet.getString("detallePago"));
-                pago.put("estado", resultSet.getBoolean("estado"));
-                pago.put("inquilino_id", resultSet.getInt("inquilino_id"));
-                pagos.add(pago);
-            }
-            conn.disconnect();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al mostrar pagos", e);
+    public void insertarPago() {
+        if (conn == null) {
+            throw new RuntimeException("Conexión no establecida.");
         }
-    }
 
-    public ArrayList<Map<String, Object>> getPagos() {
-        return pagos;
-    }
-
-    public void ingresarPago(java.math.BigDecimal monto, String formaPago, String detallePago, Boolean estado, Integer inquilinoId) {
         try {
-            conn.connect();
-            CallableStatement statement = conn.getJdbcConnection().prepareCall("{call ingresarPago(?, ?, ?, ?, ?)}");
+            conn.connect(); // Conecta a la base de datos
+            Connection connection = conn.getJdbcConnection();
+
+            CallableStatement statement = connection.prepareCall("{CALL ingresarPago( ?, ?, ?, ?, ?)}");
             statement.setBigDecimal(1, monto);
             statement.setString(2, formaPago);
             statement.setString(3, detallePago);
             statement.setBoolean(4, estado);
             statement.setInt(5, inquilinoId);
+
             statement.execute();
-            conn.disconnect();
+            statement.close();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al ingresar pago", e);
+            e.printStackTrace();
+            throw new RuntimeException("Error SQL, no se pudo insertar el pago.", e);
+        } finally {
+            try {
+                conn.disconnect(); // Cierra la conexión
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Error al cerrar la conexión.", e);
+            }
         }
     }
 
-    public void editarPago(Integer id, java.math.BigDecimal monto, String formaPago, String detallePago, Boolean estado, Integer inquilinoId) {
+    public void editarPago() {
+        if (conn == null) {
+            throw new RuntimeException("Conexión no establecida.");
+        }
+
         try {
-            conn.connect();
-            CallableStatement statement = conn.getJdbcConnection()
-                    .prepareCall("{call editarPagoPorId(?, ?, ?, ?, ?, ?)}");
+            conn.connect(); // Conecta a la base de datos
+            Connection connection = conn.getJdbcConnection();
+
+            CallableStatement statement = connection.prepareCall("{CALL editarPagoPorId(?, ?, ?, ?, ?, ?, ?)}");
             statement.setInt(1, id);
-            statement.setBigDecimal(2, monto);
-            statement.setString(3, formaPago);
-            statement.setString(4, detallePago);
-            statement.setBoolean(5, estado);
-            statement.setInt(6, inquilinoId);
+            statement.setTimestamp(2, fechaRegistro);
+            statement.setBigDecimal(3, monto);
+            statement.setString(4, formaPago);
+            statement.setString(5, detallePago);
+            statement.setBoolean(6, estado);
+            statement.setInt(7, inquilinoId);
+
             statement.execute();
-            conn.disconnect();
+            statement.close();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al editar pago", e);
+            e.printStackTrace();
+            throw new RuntimeException("Error SQL, no se pudo editar el pago.", e);
+        } finally {
+            try {
+                conn.disconnect(); // Cierra la conexión
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Error al cerrar la conexión.", e);
+            }
         }
     }
 
-    public void eliminarPago(Integer id) {
+    public void eliminarPago() {
+        if (conn == null) {
+            throw new RuntimeException("Conexión no establecida.");
+        }
+
         try {
-            conn.connect();
-            CallableStatement statement = conn.getJdbcConnection().prepareCall("{call eliminarPagoPorId(?)}");
+            conn.connect(); // Conecta a la base de datos
+            Connection connection = conn.getJdbcConnection();
+
+            CallableStatement statement = connection.prepareCall("{CALL eliminarPagoPorId(?)}");
             statement.setInt(1, id);
+
             statement.execute();
-            conn.disconnect();
+            statement.close();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar pago", e);
+            e.printStackTrace();
+            throw new RuntimeException("Error SQL, no se pudo eliminar el pago.", e);
+        } finally {
+            try {
+                conn.disconnect(); // Cierra la conexión
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Error al cerrar la conexión.", e);
+            }
         }
     }
 }

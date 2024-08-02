@@ -5,7 +5,7 @@
 
 <jsp:include page="includes/header.jsp" />
 
-<div class="row">
+<div class="row  content-container">
     <div class="col-sm-12">
         <h1 class="text-center">Pagos</h1>
         <div class="card-deck">
@@ -48,7 +48,7 @@
                             <label for="inquilino_id">Inquilino</label>
                             <select class="form-control" id="inquilino_id" name="inquilino_id">
                                 <!-- Aquí deberías llenar los inquilinos desde el backend -->
-                                <c:forEach items="${inquilinos}" var="inquilino">
+                                <c:forEach items="${sessionScope.lista3}" var="inquilino">
                                     <option value="${inquilino.id}" ${dato != null && dato.inquilino_id == inquilino.id ? 'selected' : ''}>
                                         ${inquilino.nombres} ${inquilino.apellidos}
                                     </option>
@@ -67,7 +67,7 @@
     </div>
 </div>
 <!-- table section -->
-<div class="row">
+<div class="row  content-container">
     <div class="col-sm-12">
         <h1 class="text-center">Registros de Pagos</h1>
         <div class="card-deck">

@@ -96,57 +96,58 @@ DELIMITER ;
 
 # store procedure para obtener los inquilinos por id
 DELIMITER $$
-CREATE PROCEDURE `obtenerInquilinoPorId`(IN id INT)
+CREATE PROCEDURE `obtenerInquilinoPorId`(IN in_id INT)
 BEGIN
-    SELECT * FROM inquilino WHERE id = id;
+    SELECT * FROM inquilino WHERE id = in_id;
 END$$
 DELIMITER ;
 
 # store procedure para obtener las propiedades por id
 DELIMITER $$
-CREATE PROCEDURE `obtenerPropiedadePorId`(IN id INT)
+CREATE PROCEDURE `obtenerPropiedadePorId`(IN in_id INT)
 BEGIN
-    SELECT * FROM propiedad WHERE id = id;
+    SELECT * FROM propiedad WHERE id = in_id;
 END$$
 DELIMITER ;
 
 # store procedure para obtener los contratos por id
 DELIMITER $$
-CREATE PROCEDURE `obtenerContratoPorId`(IN id INT)
+CREATE PROCEDURE `obtenerContratoPorId`(IN in_id INT)
 BEGIN
-    SELECT * FROM contrato WHERE id = id;
+    SELECT * FROM contrato WHERE id = in_id;
 END$$
 DELIMITER ;
 
 # store procedure para obtener los pagos por id
 DELIMITER $$
-CREATE PROCEDURE `obtenerPagoPorId`(IN id INT)
+CREATE PROCEDURE `obtenerPagoPorId`(IN in_id INT)
 BEGIN
-    SELECT * FROM pago WHERE id = id;
+    SELECT * FROM pago WHERE id = in_id;
 END$$
 DELIMITER ;
 
 # store procedure para editar los inquilinos por id
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `editarInquilinoPorId`(IN id INT, IN nombres VARCHAR(255), IN apellidos VARCHAR(255), IN cedula VARCHAR(255), IN telefono VARCHAR(255), IN correo VARCHAR(255))
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `editarInquilinoPorId`(IN in_id INT, IN nombres VARCHAR(255), IN apellidos VARCHAR(255), IN cedula VARCHAR(255), IN telefono VARCHAR(255), IN correo VARCHAR(255))
 BEGIN
-    UPDATE inquilino SET nombres = nombres, apellidos = apellidos, cedula = cedula, telefono = telefono, correo = correo WHERE id = id;
+    UPDATE inquilino SET nombres = nombres, apellidos = apellidos, cedula = cedula, telefono = telefono, correo = correo WHERE id = in_id;
 END$$
 DELIMITER ;
 
 # store procedure para editar las propiedades por id
 DELIMITER $$
-CREATE PROCEDURE `editarPropiedadPorId`(IN id INT, IN direccion VARCHAR(255), IN numero VARCHAR(255), IN descripcion VARCHAR(255), IN estado VARCHAR(255))
+CREATE PROCEDURE `editarPropiedadPorId`(IN in_id INT, IN direccion VARCHAR(255), IN numero VARCHAR(255), IN descripcion VARCHAR(255), IN estado VARCHAR(255))
 BEGIN
-    UPDATE propiedad SET direccion = direccion, numero = numero, descripcion = descripcion, estado = estado WHERE id = id;
+    UPDATE propiedad SET direccion = direccion, numero = numero, descripcion = descripcion, estado = estado WHERE id = in_id;
 END$$
 DELIMITER ;
 
 # store procedure para editar los contratos por id
 DELIMITER $$
-CREATE PROCEDURE `editarContratoPorId`(IN id INT, IN valorMensual DECIMAL(10,2), IN diaMaximoDePago INT, IN estado BOOLEAN)
+CREATE PROCEDURE `editarContratoPorId`(IN in_id INT, IN valorMensual DECIMAL(10,2), IN diaMaximoDePago INT, IN estado BOOLEAN)
 BEGIN
-    UPDATE contrato SET valorMensual = valorMensual, diaMaximoDePago = diaMaximoDePago, estado = estado WHERE id = id;
+    UPDATE contrato SET valorMensual = valorMensual, diaMaximoDePago = diaMaximoDePago, estado = estado WHERE id = in_id;
 END$$
 DELIMITER ;
 
@@ -241,9 +242,9 @@ DELIMITER ;
 
 # store procedure para ingresar un pago
 DELIMITER $$
-CREATE PROCEDURE `ingresarPago`( IN monto DECIMAL(10,2), IN formaPago ENUM('EFECTIVO', 'TRANSFERENCIA', 'DEPOSITO'), IN detallePago VARCHAR(255), IN estado BOOLEAN, IN inquilino_id INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ingresarPago`(IN monto DECIMAL(10,2), IN formaPago ENUM('EFECTIVO', 'TRANSFERENCIA', 'DEPOSITO'), IN detallePago VARCHAR(255), IN estado BOOLEAN, IN inquilino_id INT)
 BEGIN
-    INSERT INTO pago ( monto, formaPago, detallePago, estado, inquilino_id) VALUES ( monto, formaPago, detallePago, estado, inquilino_id);
+    INSERT INTO pago (monto, formaPago, detallePago, estado, inquilino_id) VALUES (monto, formaPago, detallePago, estado, inquilino_id);
 END$$
 DELIMITER ;
 
